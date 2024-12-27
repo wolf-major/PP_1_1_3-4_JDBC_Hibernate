@@ -8,17 +8,6 @@ public class Util {
     private static String dbUser = "root";
     private static String dbPass = "root";
 
-    public String getDbURL() {
-        return dbURL;
-    }
-
-    public String getDbUser() {
-        return dbUser;
-    }
-
-    public String getDbPass() {
-        return dbPass;
-    }
 
     public static Connection getConnection() {
         Connection conn = null;

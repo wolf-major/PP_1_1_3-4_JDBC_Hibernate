@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDaoJDBCImpl implements UserDao {
-    Connection connection = Util.getConnection();
+    private final Connection connection = Util.getConnection();
 
     public UserDaoJDBCImpl() {
 
@@ -21,9 +21,9 @@ public class UserDaoJDBCImpl implements UserDao {
                 "age  TINYINT(3) NOT NULL)";
 
         try (Statement statement = connection.createStatement()) {
-            statement.execute(sqlCreate);
+            statement.executeQuery(sqlCreate);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при создании таблицы!");
         }
     }
 
@@ -31,9 +31,9 @@ public class UserDaoJDBCImpl implements UserDao {
         String sqlDrop = "DROP TABLE IF EXISTS users";
 
         try (Statement statement = connection.createStatement()) {
-            statement.execute(sqlDrop);
+            statement.executeQuery(sqlDrop);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при удалении таблицы!");
         }
     }
 
@@ -48,7 +48,7 @@ public class UserDaoJDBCImpl implements UserDao {
 
             System.out.printf("User с именем — %s добавлен в базу данных.\n", name);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при добавлении пользователя!");
         }
     }
 
@@ -58,7 +58,7 @@ public class UserDaoJDBCImpl implements UserDao {
         try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
             preparedStatement.setLong(1, id);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при удалении пользователя!");
         }
 
     }
@@ -78,7 +78,7 @@ public class UserDaoJDBCImpl implements UserDao {
                 users.add(user);
             }
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при получении списка пользователей!");
         }
         return users;
     }
@@ -87,9 +87,9 @@ public class UserDaoJDBCImpl implements UserDao {
         String sql = "DELETE FROM users";
 
         try (Statement statement = connection.createStatement()) {
-            statement.execute(sql);
+            statement.executeQuery(sql);
         } catch (SQLException e) {
-            throw new RuntimeException(e);
+            System.out.println("Ошибка при очистке таблицы!");
         }
     }
 }
